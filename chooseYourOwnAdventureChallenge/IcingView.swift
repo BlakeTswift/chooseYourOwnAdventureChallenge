@@ -12,6 +12,12 @@ struct IcingView: View {
     @Binding var Icing: String
     @Binding var Toppings: String
     @Binding var Sparklers: Bool
+    @Binding var Fruit: String
+    @Binding var Birthdate: String
+    @Binding var isBirthday: Bool
+    @Binding var Plate: String
+    
+    @State var R1 = false
     
     var body: some View {
         NavigationView {
@@ -65,8 +71,22 @@ struct IcingView: View {
                         .multilineTextAlignment(.center)
                     
                     ZStack {
+                        
+                        Text("?")
+                            .font(.system(size: 90, weight: .bold))
+                            .foregroundColor(.red)
+                            .animation(.easeInOut(duration: 2))
+                            .rotationEffect(Angle(degrees: R1 ? 45 : -45))
+                            .animation(.linear(duration: 0.5).repeatForever(autoreverses: true), value: R1)
+                            .onAppear {
+                                R1 = true
+                            }
+                            .offset(x: -150,y: 200)
+                        
+                        
                         Button("Red") {
-                            Icing = "Red"
+                            Icing = "CakeR"
+                            
                             
                         }
                         .font(.system(size: 50, weight: .medium, design: .serif))
@@ -75,8 +95,8 @@ struct IcingView: View {
                         .buttonStyle(.borderedProminent)
                         .offset(x: 90, y: 100)
                         
-                        Button("White") {
-                            Icing = "White"
+                        Button("Clear") {
+                            Icing = "CakeW"
                             
                         }
                         .font(.system(size: 50, weight: .medium, design: .serif))
@@ -85,7 +105,7 @@ struct IcingView: View {
                         .offset(x: -90, y: 100)
                         
                         Button("Brown") {
-                            Icing = "Brown"
+                            Icing = "CakeB"
                             
                         }
                         .font(.system(size: 50, weight: .medium, design: .serif))
@@ -94,12 +114,12 @@ struct IcingView: View {
                         .buttonStyle(.borderedProminent)
                         .offset(y: 200)
                         
-                        NavigationLink(destination: ToppingView(Toppings: $Toppings, Sparklers: $Sparklers)
+                        NavigationLink(destination: ToppingView(Icing: $Icing, Toppings: $Toppings, Sparklers: $Sparklers, Fruit: $Fruit,Birthdate: $Birthdate,isBirthday: $isBirthday, Plate: $Plate)
                             .navigationBarBackButtonHidden(true), label: {
-                            
-                            Text("Next")
-                            Image(systemName: "arrowshape.right.fill")
-                        })
+                                
+                                Text("Next")
+                                Image(systemName: "arrowshape.right.fill")
+                            })
                         .font(.system(size: 40, weight: .medium, design: .serif))
                         .foregroundStyle(.white)
                         .background(.green)
@@ -107,7 +127,7 @@ struct IcingView: View {
                         .offset (x:100,y:-450)
                         
                         
-            
+                        
                         
                         
                         
@@ -119,10 +139,11 @@ struct IcingView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var Icing = ""
-    @Previewable @State var Toppings = ""
-    @Previewable @State var Sparklers = false
-    
-    IcingView(Icing: $Icing,Toppings: $Toppings, Sparklers: $Sparklers)
-}
+//#Preview {
+//    @Previewable @State var Icing = ""
+//    @Previewable @State var Toppings = ""
+//    @Previewable @State var Sparklers = false
+//    @Previewable @State var Fruit = ""
+//    
+//    IcingView(Icing: $Icing,Toppings: $Toppings, Sparklers: $Sparklers,Fruit: $Fruit,Birthdate: $Birthdate,isBirthday: $isBirthday)
+//}

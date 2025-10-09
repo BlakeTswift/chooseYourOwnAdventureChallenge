@@ -9,8 +9,15 @@ import SwiftUI
 
 struct BirthdayView: View {
     
+    @Binding var Icing: String
+    @Binding var Toppings: String
+    @Binding var Sparklers: Bool
+    @Binding var Fruit: String
+    @Binding var Birthdate: String
     @Binding var isBirthday: Bool
+    @Binding var Plate: String
     
+    @State var R4: Bool = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -38,7 +45,16 @@ struct BirthdayView: View {
                     .ignoresSafeArea(edges: .all)
                     .offset(y: 280)
                 
-                
+                Text("?")
+                    .font(.system(size: 90, weight: .bold))
+                    .foregroundColor(.red)
+                    .animation(.easeInOut(duration: 2))
+                    .rotationEffect(Angle(degrees: R4 ? 45 : -45))
+                    .animation(.linear(duration: 0.5).repeatForever(autoreverses: true), value: R4)
+                    .onAppear {
+                        R4 = true
+                    }
+                    .offset(x: -150,y: 350)
                 
                 NavigationLink("HOME") {
                     ContentView()
@@ -81,6 +97,18 @@ struct BirthdayView: View {
                         .buttonStyle(.borderedProminent)
                         .offset(x: -90, y: 100)
                         
+                        
+                        NavigationLink(destination: PlateView(Icing: $Icing, Toppings: $Toppings, Sparklers: $Sparklers, Fruit: $Fruit, Birthdate: $Birthdate, isBirthday: $isBirthday, Plate: $Plate)
+                            .navigationBarBackButtonHidden(true), label: {
+                                
+                                Text("Next")
+                                Image(systemName: "arrowshape.right.fill")
+                            })
+                        .font(.system(size: 40, weight: .medium, design: .serif))
+                        .foregroundStyle(.white)
+                        .background(.green)
+                        .cornerRadius(15)
+                        .offset (x:100,y:-450)
                     }
                     
                 }
@@ -89,8 +117,8 @@ struct BirthdayView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var isBirthday: Bool = true
-    
-    BirthdayView(isBirthday: $isBirthday)
-}
+//#Preview {
+//    @Previewable @State var isBirthday: Bool = true
+//
+//    BirthdayView(isBirthday: $isBirthday)
+//}

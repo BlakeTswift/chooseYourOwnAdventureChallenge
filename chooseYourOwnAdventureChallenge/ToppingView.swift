@@ -9,9 +9,15 @@ import SwiftUI
 
 struct ToppingView: View {
     
+    @Binding var Icing: String
     @Binding var Toppings: String
     @Binding var Sparklers: Bool
     @Binding var Fruit: String
+    @Binding var Birthdate: String
+    @Binding var isBirthday: Bool
+    @Binding var Plate: String
+    
+    @State var R6: Bool = false
     
     var body: some View {
         NavigationView {
@@ -40,7 +46,16 @@ struct ToppingView: View {
                     .ignoresSafeArea(edges: .all)
                     .offset(y: 280)
                 
-                
+                Text("?")
+                    .font(.system(size: 90, weight: .bold))
+                    .foregroundColor(.red)
+                    .animation(.easeInOut(duration: 2))
+                    .rotationEffect(Angle(degrees: R6 ? 45 : -45))
+                    .animation(.linear(duration: 0.5).repeatForever(autoreverses: true), value: R6)
+                    .onAppear {
+                        R6 = true
+                    }
+                    .offset(x: -150,y: 350)
                 
                 NavigationLink("HOME") {
                     ContentView()
@@ -86,14 +101,14 @@ struct ToppingView: View {
                         
                         Button("Whipped \nCream") {
                             
-                            Toppings = "Whipped Cream"
+                            Toppings = "Whip"
                         }
                         .font(.system(size: 30, weight: .medium, design: .serif))
                         .foregroundStyle(.white)
                         .buttonStyle(.borderedProminent)
                         .offset(y: 200)
                         
-                        NavigationLink(destination: SparklersView(Sparklers: $Sparklers, Fruit: $Fruit)
+                        NavigationLink(destination: SparklersView(Icing: $Icing, Toppings: $Toppings, Sparklers: $Sparklers, Fruit: $Fruit,Birthdate: $Birthdate,isBirthday: $isBirthday, Plate: $Plate)
                             .navigationBarBackButtonHidden(true), label: {
                                 
                                 Text("Next")
@@ -106,16 +121,16 @@ struct ToppingView: View {
                         .offset (x:100,y:-450)
                     }
                 }
-                }
             }
         }
     }
-
-
-#Preview {
-    @Previewable @State var Toppings = "None"
-    @Previewable @State var Sparklers = false
-    @Previewable @State var Fruit = "None"
-    
-    ToppingView(Toppings: $Toppings,Sparklers: $Sparklers,Fruit: $Fruit)
 }
+
+
+//#Preview {
+//    @Previewable @State var Toppings = ""
+//    @Previewable @State var Sparklers = false
+//    @Previewable @State var Fruit = ""
+//    
+//    ToppingView(Toppings: $Toppings,Sparklers: $Sparklers,Fruit: $Fruit)
+//}

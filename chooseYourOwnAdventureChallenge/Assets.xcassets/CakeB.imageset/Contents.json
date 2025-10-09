@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "cake-clipart-drawing-chocolate-jam-260nw-2565605431-removebg-preview.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

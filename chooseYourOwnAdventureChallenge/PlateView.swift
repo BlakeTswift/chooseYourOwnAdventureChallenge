@@ -9,11 +9,21 @@ import SwiftUI
 
 struct PlateView: View {
     
+    @Binding var Icing: String
+    @Binding var Toppings: String
+    @Binding var Sparklers: Bool
+    @Binding var Fruit: String
+    @Binding var Birthdate: String
+    @Binding var isBirthday: Bool
     @Binding var Plate: String
+    
+    @State var R2 = false 
     
     var body: some View {
         NavigationView {
             ZStack {
+                
+                
                 
                 Rectangle().fill(LinearGradient(colors: [.red, .yellow, .blue,.purple], startPoint: .topLeading, endPoint: .bottom))
                     .frame(width: .infinity, height: 600)
@@ -38,7 +48,16 @@ struct PlateView: View {
                     .ignoresSafeArea(edges: .all)
                     .offset(y: 280)
                 
-                
+                Text("?")
+                    .font(.system(size: 90, weight: .bold))
+                    .foregroundColor(.red)
+                    .animation(.easeInOut(duration: 2))
+                    .rotationEffect(Angle(degrees: R2 ? 45 : -45))
+                    .animation(.linear(duration: 0.5).repeatForever(autoreverses: true), value: R2)
+                    .onAppear {
+                        R2 = true
+                    }
+                    .offset(x: -150,y: 350)
                 
                 NavigationLink("HOME") {
                     ContentView()
@@ -63,7 +82,7 @@ struct PlateView: View {
                     
                     ZStack {
                         Button("Fancy") {
-                            Plate = "Fancy"
+                            Plate = "PlateF"
                             
                         }
                         .font(.system(size: 40, weight: .medium, design: .serif))
@@ -73,13 +92,26 @@ struct PlateView: View {
                         .offset(x: 100, y: 100)
                         
                         Button("Normal") {
-                            Plate = "Normal"
+                            Plate = "plateN"
                             
                         }
                         .font(.system(size: 40, weight: .medium, design: .serif))
                         .foregroundStyle(.white)
                         .buttonStyle(.borderedProminent)
                         .offset(x: -100, y: 100)
+                        
+                        
+                        NavigationLink(destination: ResultView(Icing: $Icing, Toppings: $Toppings, Sparklers: $Sparklers, Fruit: $Fruit, Birthdate: $Birthdate, isBirthday: $isBirthday, Plate: $Plate)
+                            .navigationBarBackButtonHidden(true), label: {
+                                
+                                Text("Next")
+                                Image(systemName: "arrowshape.right.fill")
+                            })
+                        .font(.system(size: 40, weight: .medium, design: .serif))
+                        .foregroundStyle(.white)
+                        .background(.green)
+                        .cornerRadius(15)
+                        .offset (x:100,y:-450)
                         
                     }
                     
@@ -88,8 +120,8 @@ struct PlateView: View {
         }
     }
 }
-#Preview {
-    @Previewable @State var Plate = "Normal"
-    
-    PlateView(Plate: $Plate)
-}
+//#Preview {
+//    @Previewable @State var Plate = "Normal"
+//    
+//    PlateView(Plate: $Plate)
+//}

@@ -9,9 +9,15 @@ import SwiftUI
 
 struct SparklersView: View {
     
+    @Binding var Icing: String
+    @Binding var Toppings: String
     @Binding var Sparklers: Bool
-    @Binding var Fruit: Bool
+    @Binding var Fruit: String
+    @Binding var Birthdate: String
+    @Binding var isBirthday: Bool
+    @Binding var Plate: String
     
+    @State var R5: Bool = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,6 +45,16 @@ struct SparklersView: View {
                     .ignoresSafeArea(edges: .all)
                     .offset(y: 280)
                 
+                Text("?")
+                    .font(.system(size: 90, weight: .bold))
+                    .foregroundColor(.red)
+                    .animation(.easeInOut(duration: 2))
+                    .rotationEffect(Angle(degrees: R5 ? 45 : -45))
+                    .animation(.linear(duration: 0.5).repeatForever(autoreverses: true), value: R5)
+                    .onAppear {
+                        R5 = true
+                    }
+                    .offset(x: -150,y: 350)
                 
                 
                 NavigationLink("HOME") {
@@ -82,27 +98,28 @@ struct SparklersView: View {
                         .buttonStyle(.borderedProminent)
                         .offset(x: -90, y: 100)
                         
+                        NavigationLink(destination: FruitView(Icing: $Icing, Toppings: $Toppings, Sparklers: $Sparklers, Fruit: $Fruit,Birthdate: $Birthdate,isBirthday: $isBirthday, Plate: $Plate)
+                            .navigationBarBackButtonHidden(true), label: {
+                                
+                                Text("Next")
+                                Image(systemName: "arrowshape.right.fill")
+                            })
+                        .font(.system(size: 40, weight: .medium, design: .serif))
+                        .foregroundStyle(.white)
+                        .background(.green)
+                        .cornerRadius(15)
+                        .offset (x:100,y:-450)
                     }
-                    NavigationLink(destination: FruitView(Sparklers: $Sparklers,Fruit: $Fruit)
-                        .navigationBarBackButtonHidden(true), label: {
-                            
-                            Text("Next")
-                            Image(systemName: "arrowshape.right.fill")
-                        })
-                    .font(.system(size: 40, weight: .medium, design: .serif))
-                    .foregroundStyle(.white)
-                    .background(.green)
-                    .cornerRadius(15)
-                    .offset (x:100,y:-450)
+                    
                 }
             }
         }
     }
 }
 
-#Preview {
-    @Previewable @State var Sparklers = false
-    @Previewable @State var Fruit = "None"
-    
-    SparklersView(Sparklers: $Sparklers, Fruit: $Fruit)
-}
+//#Preview {
+//    @Previewable @State var Sparklers = false
+//    @Previewable @State var Fruit = ""
+//    
+//    SparklersView(Sparklers: $Sparklers, Fruit: $Fruit)
+//}
